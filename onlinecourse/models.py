@@ -104,10 +104,10 @@ class Enrollment(models.Model):
 class Question(models.Model):
     # Foreign key to lesson? (course)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    # question text
-    question = models.CharField(max_length=100)
     # question grade/mark
-    grade = models.FloatField()
+    grade = models.FloatField(default=1)
+    # question content
+    title = models.CharField(max_length=100, default='title')
 
     # <HINT> A sample model method to calculate if learner get the score of the question
     def is_get_score(self, selected_ids):
@@ -129,10 +129,11 @@ class Choice(models.Model):
     # Foreign key to Question
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     # choice content
-    choice = models.CharField(max_length=100)
+    content = models.CharField(max_length=100)
     # Correct or not?
-    is_correct = False
+    is_correct = models.BooleanField(default=False)
 
+    
 # <HINT> The submission model
 # One enrollment could have multiple submission
 # One submission could have multiple choices
